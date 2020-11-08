@@ -25,7 +25,7 @@ const Dragger: React.FC<Props> = ({ children }) => {
     SetDragging(true);
   };
   const dragEnd = (e: React.MouseEvent) => {
-    //원안에 마우스 다시 클릭시 드레그 끝
+    //윈도우 안에서 클릭시 드레그 끝
     SetDragging(false);
   };
 
@@ -38,7 +38,7 @@ const Dragger: React.FC<Props> = ({ children }) => {
       return 0;
     }
   };
-  //원 밖에서도 드레그 할 수 있도록 원 상위 요소에 moving 이벤트 위치
+  //원 밖에서도 드레그 할 수 있도록 원 박스 상위 요소에 moving 이벤트 위치
   const moving = (e: React.MouseEvent) => {
     if (dragging) {
       //드레그에 의해 계산된 left, top 값
@@ -84,12 +84,11 @@ const Dragger: React.FC<Props> = ({ children }) => {
   };
 
   return (
-    <DraggerContainer onMouseMove={moving}>
+    <DraggerContainer onMouseMove={moving} onMouseUp={dragEnd}>
       <BoxContainer
         className='drag-box'
         style={styles}
         onMouseDown={dragStart}
-        onMouseUp={dragEnd}
         ref={box}
       >
         {children}
